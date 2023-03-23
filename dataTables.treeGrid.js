@@ -76,6 +76,7 @@
             var select = settings._select;
             var dataTable = $(settings.nTable).dataTable().api();
             var sLeft = this.s.left;
+			var tLeft = this.s.tleft;
             var treeGridRows = {};
             var expandIcon = $(this.s.expandIcon);
             var collapseIcon = $(this.s.collapseIcon);
@@ -129,7 +130,7 @@
                 var icon = collapseIcon.clone();
                 icon.css('marginLeft', layer * sLeft + 'px');
                 td.removeClass('treegrid-control').addClass('treegrid-control-open');
-                td.html('').append(icon);
+                //td.html('').append(icon);
 
                 if (data.children && data.children.length) {
                     var subRows = treeGridRows[parentTrId] = [];
@@ -141,6 +142,13 @@
                         var left = (layer + 1) * sLeft;
                         $(node).attr('parent-index', index);
                         treegridTd.find('span').css('marginLeft', left + 'px');
+						if (!item.children || item.children.length == 0) {
+							treegridTd.find('.tree-grid-data').css('marginLeft', left + tLeft + 10 + 'px');							
+						}
+						else{
+							treegridTd.find('.tree-grid-data').css('marginLeft', tLeft + 'px');
+						}
+						
                         treegridTd.next().css('paddingLeft', paddingLeft + left + 'px');
                         $(node).insertAfter(prevRow);
                         prevRow = node;
@@ -166,7 +174,7 @@
                 var icon = expandIcon.clone();
                 icon.css('marginLeft', layer * sLeft + 'px');
                 td.removeClass('treegrid-control-open').addClass('treegrid-control');
-                td.html('').append(icon);
+                //td.html('').append(icon);
 
                 resetTreeGridRows(parentTrId);
                 resetEvenOddClass(dataTable);
@@ -288,6 +296,7 @@
 
     TreeGrid.defaults = {
         left: 12,
+		tleft: 10,
         expandIcon: '<span>+</span>',
         collapseIcon: '<span>-</span>'
     };
