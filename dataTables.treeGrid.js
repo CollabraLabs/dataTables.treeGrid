@@ -127,10 +127,17 @@
                 var td = $(dataTable.cell(getParentTd(e.target)).node());
                 var paddingLeft = parseInt(td.css('padding-left'), 10);
                 var layer = parseInt(td.find('span').css('margin-left') || 0, 10) / sLeft;
+				var _text = td.find('.tree-grid-data');
                 var icon = collapseIcon.clone();
                 icon.css('marginLeft', layer * sLeft + 'px');
                 td.removeClass('treegrid-control').addClass('treegrid-control-open');
-                //td.html('').append(icon);
+				if (data.children && data.children.length) {
+	                td.html('').append(icon).append(_text);
+				}
+				else{
+					td.html('').append(_text);
+				}
+
 
                 if (data.children && data.children.length) {
                     var subRows = treeGridRows[parentTrId] = [];
@@ -172,9 +179,19 @@
                 var td = $(dataTable.cell(getParentTd(e.target)).node());
                 var layer = parseInt(td.find('span').css('margin-left') || 0, 10) / sLeft;
                 var icon = expandIcon.clone();
+				var _text = td.find('.tree-grid-data');
                 icon.css('marginLeft', layer * sLeft + 'px');
                 td.removeClass('treegrid-control-open').addClass('treegrid-control');
-                //td.html('').append(icon);
+
+                var row = dataTable.row(parentTr);
+                var index = row.index();
+                var data = row.data();
+				if (data.children && data.children.length) {
+	                td.html('').append(icon).append(_text);
+				}
+				else{
+					td.html('').append(_text);
+				}
 
                 resetTreeGridRows(parentTrId);
                 resetEvenOddClass(dataTable);
