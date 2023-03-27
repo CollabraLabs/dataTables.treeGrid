@@ -112,6 +112,10 @@
                 if (!$(this).html()) {
                     return;
                 }
+		    
+		var isTarget = false;
+		e.target.classList.forEach(function (value, key) { if(value === "fa-angle-right") { isTarget = true; return false; } });
+		if(!isTarget) return;		    
 
                 // record selected indexes
                 var selectedIndexes = [];
@@ -171,6 +175,10 @@
 
             // Collapse TreeGrid
             dataTable.on('click', 'td.treegrid-control-open', function (e) {
+		var isTarget = false;
+		e.target.classList.forEach(function (value, key) { if(value === "fa-angle-down") { isTarget = true; return false; } });
+		if(!isTarget) return;
+		    
                 var selectedIndexes = [];
                 select && (selectedIndexes = dataTable.rows({selected: true}).indexes().toArray());
 
